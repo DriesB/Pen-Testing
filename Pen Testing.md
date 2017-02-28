@@ -4,11 +4,11 @@
 ##Table of Contents
 
 1. [Operating System](#operating-system)
-2. [Passive reconaissance](#passive-reconaissance)
+2. [Passive Reconaissance](#passive-reconaissance)
 3. [Enabling monitor mode](#enabling-monitor-mode)
 4. [Capturing packets](#capturing-packets)
 5. [Creating Fake AccessPoint](#creating-fake-accesspoint)
-6. [Cracking WEP/WPA/WPA2](#cracking-wep/wpa/wpa2)
+6. [Cracking WEP/WPA/WPA2](#cracking-wep-wpa-wpa2)
 7. [Information Gathering](#information-gathering)
 8. [](#)
 9. [](#)
