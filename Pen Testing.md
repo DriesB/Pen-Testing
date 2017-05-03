@@ -4,12 +4,12 @@
 ##Table of Contents
 
 1. [Operating System](#operating-system)
-2. [Passive Reconnaissance](#passive-reconnaissance)
+2. [Passive reconaissance](#passive-reconaissance)
 3. [Enabling monitor mode](#enabling-monitor-mode)
 4. [Capturing packets](#capturing-packets)
 5. [Creating Fake AccessPoint](#creating-fake-accesspoint)
-6. [Cracking WEP WPA WPA2](#cracking-wep-wpa-wpa2)
-7. [Information Gathering upon connected](#information-gathering-upon-connected)
+6. [Cracking WEP/WPA/WPA2](#cracking-wep/wpa/wpa2)
+7. [Information Gathering](#information-gathering)
 8. [](#)
 9. [](#)
 
@@ -182,7 +182,7 @@ Kali Linux does not enable any externally-listening network services, some are i
 
 `bash /usr/share/mana-toolkit/run-mana/start-nat-simple.sh`
 
-##Cracking WEP WPA WPA2
+##Cracking WEP/WPA/WPA2
 
 ###WEP with traffic
 
@@ -238,7 +238,7 @@ e.g. `crunch 6 8 123456abcd!"€$% -o wordlist -t a@@@@b`
 
 `aircrack-ng HANDSHAKEFILE -w WORDLIST`
 
-##Information gathering upon connected
+##Information gathering (once connected)
 
 **place INTERFACE back in managed mode**
 
