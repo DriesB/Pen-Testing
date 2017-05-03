@@ -1,3 +1,3 @@
 # Kali
 
-[Cheatsheet](Pen Testing.md)
+[Cheatsheet](../Pen Testing.md)
