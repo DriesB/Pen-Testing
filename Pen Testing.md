@@ -154,7 +154,7 @@ Kali Linux does not enable any externally-listening network services, some are i
 
 - Analyse captured packets with Wireshark (if not encrypted)
 
-###Deauthentication Atack
+### Deauthentication Atack
 
 - Show needed information 
 
@@ -238,7 +238,7 @@ e.g. `crunch 6 8 123456abcd!"€$% -o wordlist -t a@@@@b`
 
 `aircrack-ng HANDSHAKEFILE -w WORDLIST`
 
-##Information gathering upon connected
+## Information gathering upon connected
 
 **place INTERFACE back in managed mode**
 
